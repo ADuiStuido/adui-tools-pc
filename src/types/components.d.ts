@@ -12,6 +12,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    NAvatar: typeof import('naive-ui')['NAvatar']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
@@ -19,6 +20,7 @@ declare module 'vue' {
 
 // For TSX support
 declare global {
+  const NAvatar: (typeof import('naive-ui'))['NAvatar']
   const RouterLink: (typeof import('vue-router'))['RouterLink']
   const RouterView: (typeof import('vue-router'))['RouterView']
 }

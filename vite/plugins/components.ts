@@ -6,7 +6,7 @@ export default function createComponentsPlugin(): PluginOption {
   return Components({
     dirs: ['src/components'],
     extensions: ['vue', 'tsx'],
-    dts: 'src/components.d.ts',
+    dts: 'src/types/components.d.ts',
     resolvers: [NaiveUiResolver()],
   })
 }

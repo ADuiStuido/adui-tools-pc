@@ -11,7 +11,7 @@ export default function createAutoImportPlugin(): PluginOption {
         'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar'],
       },
     ],
-    dts: 'src/auto-imports.d.ts',
+    dts: 'src/types/auto-imports.d.ts',
 
     eslintrc: {
       enabled: true,
