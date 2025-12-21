@@ -13,6 +13,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     NAvatar: typeof import('naive-ui')['NAvatar']
+    NLayout: typeof import('naive-ui')['NLayout']
+    NLayoutContent: typeof import('naive-ui')['NLayoutContent']
+    NLayoutFooter: typeof import('naive-ui')['NLayoutFooter']
+    NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
+    NLayoutSider: typeof import('naive-ui')['NLayoutSider']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
@@ -21,6 +26,11 @@ declare module 'vue' {
 // For TSX support
 declare global {
   const NAvatar: (typeof import('naive-ui'))['NAvatar']
+  const NLayout: (typeof import('naive-ui'))['NLayout']
+  const NLayoutContent: (typeof import('naive-ui'))['NLayoutContent']
+  const NLayoutFooter: (typeof import('naive-ui'))['NLayoutFooter']
+  const NLayoutHeader: (typeof import('naive-ui'))['NLayoutHeader']
+  const NLayoutSider: (typeof import('naive-ui'))['NLayoutSider']
   const RouterLink: (typeof import('vue-router'))['RouterLink']
   const RouterView: (typeof import('vue-router'))['RouterView']
 }
