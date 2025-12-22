@@ -2,7 +2,6 @@
 import { computed, h } from 'vue'
 import { type MenuOption, NIcon } from 'naive-ui'
 import { useRoute, useRouter } from 'vue-router'
-import dayjs from 'dayjs'
 import SvgIcon from '@/components/SvgIcon.vue'
 
 const route = useRoute()
@@ -43,51 +42,6 @@ const headerOptions = computed<MenuOption[]>(() => {
 const handleHeaderClick = (path: string) => {
   router.push({ path })
 }
-
-type WorkerCommand = {
-  type: 'start'
-  interval: number
-}
-
-type WorkerTickMessage = {
-  type: 'tick'
-  timestamp: string
-}
-
-let worker: Worker | null = null
-
-const time = ref<string>(dayjs().format('YYYY年MM月DD日 HH:mm:ss'))
-
-const initTimeWorker = (): void => {
-  worker = new Worker(
-    // ⚠️ 强烈建议用相对路径，避免 alias 在 Worker URL 下失效
-    new URL('../../../workers/timerWorker.ts', import.meta.url),
-    { type: 'module' },
-  )
-
-  const startMessage: WorkerCommand = {
-    type: 'start',
-    interval: 1000,
-  }
-
-  worker.postMessage(startMessage)
-
-  worker.onmessage = (e: MessageEvent<WorkerTickMessage>) => {
-    if (e.data.type === 'tick') {
-      time.value = dayjs(e.data.timestamp).format('YYYY年MM月DD日 HH:mm:ss')
-    }
-  }
-}
-
-initTimeWorker()
-
-onBeforeUnmount(() => {
-  if (worker) {
-    worker.postMessage({ type: 'stop' })
-    worker.terminate()
-    worker = null
-  }
-})
 </script>
 
 <template>
@@ -99,7 +53,6 @@ onBeforeUnmount(() => {
         :value="route.path"
         @update:value="handleHeaderClick"
       />
-      <div class="text-right">{{ time }}</div>
     </div>
   </n-layout-header>
 </template>

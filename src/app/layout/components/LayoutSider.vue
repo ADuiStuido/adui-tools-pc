@@ -78,7 +78,7 @@ const collapsed = ref(false)
     @update-collapsed="(v) => (collapsed = v)"
   >
     <div id="logo" class="w-full px-10px py-10px">
-      <div class="w-full flex justify-center items-center gap-10px rounded-sm">
+      <div class="w-full flex justify-center items-center gap-10px rounded-sm overflow-hidden">
         <img class="size-40px" src="@/assets/images/adui-tools-logo.svg" :alt="appTitle" />
         <div v-if="!collapsed" class="title text-24px font-bold text-nowrap">{{ appTitle }}</div>
       </div>
