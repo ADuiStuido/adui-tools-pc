@@ -6,7 +6,7 @@ const plugin: ToolPlugin = {
     id: 'json',
     name: 'JSON',
     icon: 'json',
-    order: 1,
+    order: 2,
   },
   routes,
 }

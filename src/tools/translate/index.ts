@@ -6,7 +6,7 @@ const plugin: ToolPlugin = {
     id: 'translate',
     name: '翻译',
     icon: 'translate',
-    order: 2,
+    order: 1,
   },
   routes,
 }

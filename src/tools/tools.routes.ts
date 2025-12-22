@@ -20,7 +20,7 @@ export function buildToolsRoutes(): RouteRecordRaw {
        * 默认重定向：你可以根据“第一个启用工具”动态决定
        * 简化起见，这里默认跳 ai-chat
        */
-      { path: '', redirect: { name: 'tool.json' } },
+      { path: '', redirect: { name: 'tool.translate' } },
 
       /**
        * 挂载各工具路由（工具只关心自己的子路由）
