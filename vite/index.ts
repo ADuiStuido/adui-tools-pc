@@ -4,6 +4,7 @@ import createAutoImportPlugin from './plugins/auto-import'
 import createComponentsPlugin from './plugins/components'
 import createHTMLPlugin from './plugins/html'
 import createUnocss from './plugins/unocss'
+import createSvgIconPlugin from './plugins/svg-icons'
 
 export default function createVitePlugin(env: Record<string, string>): PluginOption[] {
   return [
@@ -12,5 +13,6 @@ export default function createVitePlugin(env: Record<string, string>): PluginOpt
     createComponentsPlugin(),
     createHTMLPlugin(env),
     createUnocss(),
+    createSvgIconPlugin(),
   ]
 }

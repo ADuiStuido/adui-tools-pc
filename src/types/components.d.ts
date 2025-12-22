@@ -13,24 +13,30 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     NAvatar: typeof import('naive-ui')['NAvatar']
+    NDivider: typeof import('naive-ui')['NDivider']
     NLayout: typeof import('naive-ui')['NLayout']
     NLayoutContent: typeof import('naive-ui')['NLayoutContent']
     NLayoutFooter: typeof import('naive-ui')['NLayoutFooter']
     NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']
+    NMenu: typeof import('naive-ui')['NMenu']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./../components/SvgIcon.vue')['default']
   }
 }
 
 // For TSX support
 declare global {
   const NAvatar: (typeof import('naive-ui'))['NAvatar']
+  const NDivider: (typeof import('naive-ui'))['NDivider']
   const NLayout: (typeof import('naive-ui'))['NLayout']
   const NLayoutContent: (typeof import('naive-ui'))['NLayoutContent']
   const NLayoutFooter: (typeof import('naive-ui'))['NLayoutFooter']
   const NLayoutHeader: (typeof import('naive-ui'))['NLayoutHeader']
   const NLayoutSider: (typeof import('naive-ui'))['NLayoutSider']
+  const NMenu: (typeof import('naive-ui'))['NMenu']
   const RouterLink: (typeof import('vue-router'))['RouterLink']
   const RouterView: (typeof import('vue-router'))['RouterView']
+  const SvgIcon: (typeof import('./../components/SvgIcon.vue'))['default']
 }

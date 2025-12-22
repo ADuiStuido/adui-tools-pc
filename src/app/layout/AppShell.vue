@@ -1,15 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import LayoutSider from '@/app/layout/components/LayoutSider.vue'
+import LayoutHeader from '@/app/layout/components/LayoutHeader.vue'
+import LayoutContent from '@/app/layout/components/LayoutContent.vue'
+import LayoutFooter from '@/app/layout/components/LayoutFooter.vue'
+</script>
 
 <template>
-  <n-layout has-sider>
-    <n-layout-sider bordered>侧边栏</n-layout-sider>
-    <n-layout>
-      <n-layout-header>头部</n-layout-header>
-      <n-layout-content>
-        <div>内容</div>
-        <router-view />
-      </n-layout-content>
-      <n-layout-footer> 底部 </n-layout-footer>
+  <n-layout has-sider class="w-full h-full">
+    <layout-sider />
+    <n-layout embedded>
+      <layout-header />
+      <layout-content />
+      <layout-footer />
     </n-layout>
   </n-layout>
 </template>

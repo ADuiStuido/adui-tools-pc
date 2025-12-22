@@ -5,6 +5,11 @@ const routes = (): RouteRecordRaw[] => [
   {
     path: 'json',
     name: 'tool.json',
+    meta: {
+      toolId: 'json',
+      title: 'JSON工具',
+      icon: 'json',
+    },
     component: ToolsLayout,
     redirect: { name: 'tool.json-parsing' },
     children: [
@@ -13,7 +18,9 @@ const routes = (): RouteRecordRaw[] => [
         name: 'tool.json-parsing',
         meta: {
           toolId: 'json',
-          title: 'Json 解析',
+          title: 'JSON解析',
+          icon: 'json-parsing',
+          sort: 1,
         },
         component: () => import('@/tools/json/pages/JsonParsing.vue'),
       },
@@ -22,9 +29,22 @@ const routes = (): RouteRecordRaw[] => [
         name: 'tool.json-editor',
         meta: {
           toolId: 'json',
-          title: 'Json 编辑器',
+          title: 'JSON编辑器',
+          icon: 'json-editor',
+          sort: 2,
         },
         component: () => import('@/tools/json/pages/JsonEditor.vue'),
+      },
+      {
+        path: 'json-to-sql',
+        name: 'tool.json-to-sql',
+        meta: {
+          toolId: 'json',
+          title: 'JSON转SQL',
+          icon: 'json-to-sql',
+          sort: 3,
+        },
+        component: () => import('@/tools/json/pages/JsonToSql.vue'),
       },
     ],
   },

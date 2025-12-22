@@ -1,5 +1,5 @@
 [package]
-name = "ADui_Tools"
+name = "ADuiTools"
 version = "0.0.1"
 description = "ADui Tools PC - Tauri + Vue + Vite + NaiveUI"
 authors = ["ADui"]

@@ -49,7 +49,10 @@
     "commit": "cz"
   },
   "dependencies": {
+    "dayjs": "^1.11.19",
+    "less": "^4.5.1",
     "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"
   },
@@ -87,6 +90,7 @@
     "vfonts": "^0.0.3",
     "vite": "^7.2.4",
     "vite-plugin-html": "^3.2.2",
+    "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^4.0.14",
     "vue-tsc": "^3.1.5"
   },

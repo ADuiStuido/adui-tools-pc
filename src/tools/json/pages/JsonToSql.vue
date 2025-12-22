@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>JsonParsing</div>
+  <div>json to sql</div>
 </template>
 
 <style scoped></style>
