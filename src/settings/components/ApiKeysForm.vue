@@ -166,7 +166,9 @@ const handleSaveApiKeys = () => {}
       </n-form-item>
     </ad-block>
 
-    <n-button type="primary" attr-type="submit" @click="handleSaveApiKeys"> 保存 </n-button>
+    <n-button size="small" type="primary" attr-type="submit" @click="handleSaveApiKeys">
+      保存 API Keys
+    </n-button>
   </n-form>
 </template>
 

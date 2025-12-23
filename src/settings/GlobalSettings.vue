@@ -61,7 +61,7 @@ const settingsContainer = (): HTMLElement => {
           affix
           :trigger-top="24"
           :top="88"
-          :bound="24"
+          :bound="40"
         >
           <n-anchor-link
             v-for="item in settingTypes"
