@@ -13,7 +13,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     NAvatar: typeof import('naive-ui')['NAvatar']
+    NButton: typeof import('naive-ui')['NButton']
+    NButtonGroup: typeof import('naive-ui')['NButtonGroup']
     NDivider: typeof import('naive-ui')['NDivider']
+    NIcon: typeof import('naive-ui')['NIcon']
     NLayout: typeof import('naive-ui')['NLayout']
     NLayoutContent: typeof import('naive-ui')['NLayoutContent']
     NLayoutFooter: typeof import('naive-ui')['NLayoutFooter']
@@ -29,7 +32,10 @@ declare module 'vue' {
 // For TSX support
 declare global {
   const NAvatar: (typeof import('naive-ui'))['NAvatar']
+  const NButton: (typeof import('naive-ui'))['NButton']
+  const NButtonGroup: (typeof import('naive-ui'))['NButtonGroup']
   const NDivider: (typeof import('naive-ui'))['NDivider']
+  const NIcon: (typeof import('naive-ui'))['NIcon']
   const NLayout: (typeof import('naive-ui'))['NLayout']
   const NLayoutContent: (typeof import('naive-ui'))['NLayoutContent']
   const NLayoutFooter: (typeof import('naive-ui'))['NLayoutFooter']

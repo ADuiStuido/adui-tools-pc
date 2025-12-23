@@ -39,6 +39,10 @@ const headerOptions = computed<MenuOption[]>(() => {
   }))
 })
 
+function renderMenuLabel(option: MenuOption) {
+  return h('div', { className: 'select-none' }, option.label as string)
+}
+
 const handleHeaderClick = (path: string) => {
   router.push({ path })
 }
@@ -51,6 +55,7 @@ const handleHeaderClick = (path: string) => {
         mode="horizontal"
         :options="headerOptions"
         :value="route.path"
+        :render-label="renderMenuLabel"
         @update:value="handleHeaderClick"
       />
     </div>

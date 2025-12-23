@@ -51,6 +51,10 @@ const menuOptions = computed<MenuOption[]>(() => {
   }))
 })
 
+function renderMenuLabel(option: MenuOption) {
+  return h('div', { className: 'select-none' }, option.label as string)
+}
+
 /** 点击工具：跳到该工具的默认子页（第一个有 meta.title 的页面） */
 const handleToolClick = (toolPath: string) => {
   const all = router.getRoutes()
@@ -58,7 +62,11 @@ const handleToolClick = (toolPath: string) => {
     .filter((r) => r.path.startsWith(toolPath + '/'))
     .filter((r) => Boolean(r.meta?.title))
     // 排一下，保证稳定（也可以按你自己的 meta.order）
-    .sort((a, b) => a.path.localeCompare(b.path))
+    .sort((a, b) => {
+      const ao = (a.meta?.order as number) ?? 0
+      const bo = (b.meta?.order as number) ?? 0
+      return ao - bo
+    })
 
   const target = pages[0]?.path ?? toolPath
   router.push({ path: target })
@@ -77,7 +85,7 @@ const collapsed = ref(false)
     bordered
     @update-collapsed="(v) => (collapsed = v)"
   >
-    <div id="logo" class="w-full px-10px py-10px">
+    <div id="logo" class="w-full px-10px py-10px select-none">
       <div class="w-full flex justify-center items-center gap-10px rounded-sm overflow-hidden">
         <img class="size-40px" src="@/assets/images/adui-tools-logo.svg" :alt="appTitle" />
         <div v-if="!collapsed" class="title text-24px font-bold text-nowrap">{{ appTitle }}</div>
@@ -91,6 +99,7 @@ const collapsed = ref(false)
       :collapsed-width="65"
       :options="menuOptions"
       :value="activeToolKey"
+      :render-label="renderMenuLabel"
       @update:value="handleToolClick"
     />
   </n-layout-sider>

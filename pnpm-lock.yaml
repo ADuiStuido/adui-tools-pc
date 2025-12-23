@@ -32,6 +32,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^20.2.0
         version: 20.2.0
+      '@tauri-apps/api':
+        specifier: ^2.9.1
+        version: 2.9.1
       '@tauri-apps/cli':
         specifier: ^2.9.6
         version: 2.9.6
@@ -44,7 +47,7 @@ importers:
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.4
-      '@vicons/material':
+      '@vicons/ionicons5':
         specifier: ^0.13.0
         version: 0.13.0
       '@vitejs/plugin-vue':
@@ -1222,6 +1225,12 @@ packages:
         integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==,
       }
 
+  '@tauri-apps/api@2.9.1':
+    resolution:
+      {
+        integrity: sha512-IGlhP6EivjXHepbBic618GOmiWe4URJiIeZFlB7x3czM0yDHHYviH1Xvoiv4FefdkQtn6v7TuwWCRfOGdnVUGw==,
+      }
+
   '@tauri-apps/cli-darwin-arm64@2.9.6':
     resolution:
       {
@@ -1666,10 +1675,10 @@ packages:
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0 || ^7.0.0-0
 
-  '@vicons/material@0.13.0':
+  '@vicons/ionicons5@0.13.0':
     resolution:
       {
-        integrity: sha512-lKVxFNprM+CaBkUH3gt6VjIeiMsKQl2zARQMwTCZruQl2vRHzyeZiKeCflWS99CEfv2JzX/6y697smxlzyxcVw==,
+        integrity: sha512-zvZKBPjEXKN7AXNo2Na2uy+nvuv6SP4KAMQxpKL2vfHMj0fSvuw7JZcOPCjQC3e7ayssKnaoFVAhbYcW6v41qQ==,
       }
 
   '@vitejs/plugin-vue-jsx@5.1.2':
@@ -7656,6 +7665,8 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
+  '@tauri-apps/api@2.9.1': {}
+
   '@tauri-apps/cli-darwin-arm64@2.9.6':
     optional: true
 
@@ -7984,7 +7995,7 @@ snapshots:
       unplugin-utils: 0.3.1
       vite: 7.3.0(@types/node@24.10.4)(jiti@2.6.1)(less@4.5.1)(terser@5.44.1)(yaml@2.8.2)
 
-  '@vicons/material@0.13.0': {}
+  '@vicons/ionicons5@0.13.0': {}
 
   '@vitejs/plugin-vue-jsx@5.1.2(vite@7.3.0(@types/node@24.10.4)(jiti@2.6.1)(less@4.5.1)(terser@5.44.1)(yaml@2.8.2))(vue@3.5.26(typescript@5.9.3))':
     dependencies:
