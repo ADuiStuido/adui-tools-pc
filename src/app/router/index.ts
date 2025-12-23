@@ -1,15 +1,16 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import AppShell from '@/app/layout/AppShell.vue'
 import { buildToolsRoutes } from '@/tools/tools.routes.ts'
 import { registerAllTools } from '@/app/bootstrap/register.ts'
 import type { App } from 'vue'
+import globalSettings from '@/settings/routes.ts'
 
 let router
 
 export const setupRoute = async (app: App<Element>): Promise<void> => {
   await registerAllTools()
   router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: [
       {
         path: '/',
@@ -18,6 +19,7 @@ export const setupRoute = async (app: App<Element>): Promise<void> => {
           { path: '', redirect: '/tools' },
           // 把 tools 路由树挂进来
           buildToolsRoutes(),
+          ...globalSettings(),
         ],
       },
 

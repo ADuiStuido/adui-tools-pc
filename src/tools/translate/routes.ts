@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import ToolsLayout from '@/app/layout/ToolsLayout.vue'
+import EmptyLayout from '@/app/layout/EmptyLayout.vue'
 
 const routes = (): RouteRecordRaw[] => [
   {
@@ -10,7 +10,7 @@ const routes = (): RouteRecordRaw[] => [
       title: '翻译工具',
       icon: 'translate',
     },
-    component: ToolsLayout,
+    component: EmptyLayout,
     redirect: { name: 'tool.translate-baidu' },
     children: [
       {

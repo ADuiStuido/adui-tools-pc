@@ -2,7 +2,7 @@
 import { computed, h } from 'vue'
 import { type MenuOption, NIcon } from 'naive-ui'
 import { useRoute, useRouter } from 'vue-router'
-import SvgIcon from '@/components/SvgIcon.vue'
+import SvgIcon from '@/ui/SvgIcon.vue'
 
 const route = useRoute()
 const router = useRouter()

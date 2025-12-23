@@ -2,7 +2,7 @@
 import { computed, h, ref } from 'vue'
 import { NIcon, type MenuOption } from 'naive-ui'
 import { useRoute, useRouter } from 'vue-router'
-import SvgIcon from '@/components/SvgIcon.vue'
+import SvgIcon from '@/ui/SvgIcon.vue'
 
 const appTitle = import.meta.env.VITE_APP_TITLE
 const route = useRoute()
@@ -87,7 +87,7 @@ const collapsed = ref(false)
   >
     <div id="logo" class="w-full px-10px py-10px select-none">
       <div class="w-full flex justify-center items-center gap-10px rounded-sm overflow-hidden">
-        <img class="size-40px" src="@/assets/images/adui-tools-logo.svg" :alt="appTitle" />
+        <img class="size-40px" src="@/assets/logo/adui-tools-logo.svg" :alt="appTitle" />
         <div v-if="!collapsed" class="title text-24px font-bold text-nowrap">{{ appTitle }}</div>
       </div>
     </div>
