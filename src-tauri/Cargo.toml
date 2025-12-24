@@ -28,17 +28,17 @@ uuid = { version = "1", features = ["v4"] }
 chrono = { version = "0.4", features = ["serde"] }
 
 # SQLite
-rusqlite = { version = "0.38", features = ["bundled"] }
-r2d2_sqlite = "0.31"
+rusqlite = { version = "=0.37.0", features = ["bundled"] }
+r2d2_sqlite = "=0.31.0"
 r2d2 = "0.8"
 
 # HTTP（统一由 Rust 发起请求）
 reqwest = { version = "0.12", features = ["json", "gzip", "brotli", "deflate", "rustls-tls"] }
 
-thiserror = "1"
+thiserror = "2"
 base64 = "0.22"
 rand = "0.8"
 aes-gcm = "0.10"
 
 # 主密钥存系统钥匙串
-tauri-plugin-keyring = "0.1.0"
+keyring = "3.6.3"

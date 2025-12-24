@@ -44,8 +44,8 @@ const slots = useSlots()
     linear-gradient(#000 0 0) left,
     linear-gradient(#000 0 0) right;
   mask-size:
-    calc(5% - var(--gap-width) / 2) var(--border-width),
-    calc(95% - var(--gap-width) / 2) var(--border-width),
+    calc(10% - var(--gap-width) / 2) var(--border-width),
+    calc(90% - var(--gap-width) / 2) var(--border-width),
     100% calc(100% - var(--border-width)),
     var(--border-width) 100%,
     var(--border-width) 100%;
@@ -61,7 +61,7 @@ const slots = useSlots()
 .ad-block-title {
   position: absolute;
   top: 0;
-  left: 5%;
+  left: 10%;
   transform: translate(-50%, -50%);
   padding: 0 8px;
   z-index: 1;
