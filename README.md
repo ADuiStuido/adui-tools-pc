@@ -4,7 +4,7 @@
   </a>
   <h1>ADui Tools</h1>
   <p align="center">
-  <strong>一个面向开发者的跨平台 AI & 实用工具桌面应用</strong>
+    <strong>一个面向开发者的跨平台 AI & 实用工具桌面应用</strong>
   </p>
 
 [![license](https://img.shields.io/github/license/ADuiStuido/adui-tools-pc.svg)](LICENSE)
@@ -12,11 +12,15 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.0-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.0.6-646CFF.svg)](https://vitejs.dev/)
 
+  <p align="center">简体中文 | <a href="README_EN.md">English</a></p>
+
 </div>
 
-## ✨ Features
+---
 
-### 🤖 AI Chat
+## ✨ 功能特性
+
+### 🤖 AI 对话
 
 - 集成多种主流 AI 服务：
   - ChatGPT
@@ -25,13 +29,12 @@
   - 豆包
   - 通义千问
   - 文心一言
-
 - 多轮上下文对话
-- Markdown / 代码高亮
+- 支持 Markdown / 代码高亮
 - 会话管理（新建 / 重命名 / 归档）
 - 会话与消息本地持久化（SQLite）
 
-### 🛠 Developer Tools
+### 🛠 开发者工具
 
 - **JSON → Dart 实体类**
   - 自动类型推断
@@ -46,69 +49,74 @@
   - 百度翻译
   - 有道翻译
 
-### 🌐 Network & Proxy
+### 🌐 网络与代理
 
 - 内置代理设置
   - HTTP / HTTPS
   - SOCKS5
-
-- 全局代理 & 按服务覆盖
-- No Proxy（域名绕过）
+- 支持全局代理与按服务覆盖
+- 支持 No Proxy（域名绕过）
 - 适配 ChatGPT 等受限网络环境
 
-### 💾 Local-First
+### 💾 本地优先（Local-First）
 
-- 所有数据 **本地 SQLite 存储**
+- 所有数据存储于本地 SQLite
 - 会话、消息、设置、工具历史统一管理
-- API Key 本地加密存储
+- API Key 仅存本地
 
-## 📦 Tech Stack
+---
 
-| Layer      | Tech                    |
-| ---------- | ----------------------- |
-| Frontend   | Vue 3 (Composition API) |
-| Build Tool | Vite                    |
-| Desktop    | Tauri                   |
-| UI         | Naive UI                |
-| State      | Pinia                   |
-| Storage    | SQLite                  |
-| Language   | TypeScript              |
+## 📦 技术栈
 
-## 🚀 Getting Started
+| 层级     | 技术                     |
+| -------- | ------------------------ |
+| 前端     | Vue 3（Composition API） |
+| 构建     | Vite                     |
+| 桌面     | Tauri                    |
+| UI       | Naive UI                 |
+| 状态管理 | Pinia                    |
+| 存储     | SQLite                   |
+| 语言     | TypeScript               |
 
-### Prerequisites
+---
+
+## 🚀 快速开始
+
+### 环境要求
 
 - Node.js >= 18
 - Rust >= 1.70
 - pnpm / npm / yarn
 
-### Install
+### 安装依赖
 
 ```bash
 pnpm install
 ```
 
-### Development
+### 开发模式
 
 ```bash
 pnpm tauri dev
 ```
 
-### Build
+### 构建应用
 
 ```bash
 pnpm tauri build
 ```
 
-## ⚙️ Configuration
+---
 
-### AI Providers
+## ⚙️ 配置说明
+
+### AI 服务配置
 
 - 每个 AI 服务独立配置 API Key
 - 支持会话级 Provider 绑定
 - 支持 System Prompt
 
-### Proxy
+### 代理配置
 
 - 支持 HTTP / HTTPS / SOCKS5
 - 支持：
@@ -118,21 +126,27 @@ pnpm tauri build
 
 > 所有配置存储于本地 SQLite，修改即时生效。
 
-## 🔐 Security
+---
 
-- API Key **仅存本地**
+## 🔐 安全性说明
+
+- API Key 仅存本地
 - 不会上传任何聊天或工具数据
 - 可随时清空本地数据库
 
-## 🧩 Extensibility
+---
 
-ADui Tools 采用模块化设计，新工具可作为独立模块接入：
+## 🧩 可扩展性
+
+ADui Tools 采用模块化设计，新工具可以作为独立模块接入：
 
 - 独立 UI
 - 独立业务逻辑
-- 自动接入统一存储 & 网络层
+- 自动接入统一存储与网络层
 
-## 🗺 Roadmap
+---
+
+## 🗺 开发路线图
 
 - Prompt 模板系统
 - AI 对比模式
@@ -142,23 +156,29 @@ ADui Tools 采用模块化设计，新工具可作为独立模块接入：
 - HTTP 调试工具
 - 插件化工具生态
 
-## 🤝 Contributing
+---
 
-Contributions are welcome!
+## 🤝 参与贡献
 
-- Fork the repo
-- Create your feature branch
-- Commit your changes
-- Open a Pull Request
+欢迎任何形式的贡献！
 
-## 📄 License
+- Fork 本仓库
+- 创建你的功能分支
+- 提交代码
+- 发起 Pull Request
+
+---
+
+## 📄 开源协议
 
 MIT License
 
-## 🙌 Acknowledgements
+---
+
+## 🙌 鸣谢
 
 - Vue
 - Vite
 - Tauri
 - Naive UI
-- All AI providers
+- 所有 AI 服务提供方
