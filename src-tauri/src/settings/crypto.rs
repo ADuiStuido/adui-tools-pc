@@ -7,42 +7,55 @@ use crate::error::AppError;
 const KEYRING_SERVICE: &str = "ADuiTools";
 const KEYRING_ACCOUNT: &str = "master_key_v1";
 
-const KEY_LEN: usize = 32;   // AES-256
-const NONCE_LEN: usize = 12; // GCM nonce
+const KEY_LEN: usize = 32;
+const NONCE_LEN: usize = 12;
+
+static MASTER_KEY_CACHE: std::sync::OnceLock<[u8; KEY_LEN]> = std::sync::OnceLock::new();
 
 pub fn load_or_create_master_key() -> Result<[u8; KEY_LEN], AppError> {
-  // keyring: Entry::new(service, username) + get_password/set_password
-  // docs: https://docs.rs/keyring/latest/keyring/  :contentReference[oaicite:2]{index=2}
+  if let Some(k) = MASTER_KEY_CACHE.get() {
+    return Ok(*k);
+  }
+
   let entry = keyring::Entry::new(KEYRING_SERVICE, KEYRING_ACCOUNT)
     .map_err(|e| AppError::Keyring(format!("keyring entry new failed: {e}")))?;
 
-  if let Ok(stored) = entry.get_password() {
-    let raw = general_purpose::STANDARD
-      .decode(stored)
-      .map_err(|e| AppError::Crypto(format!("master key base64 decode failed: {e}")))?;
+  match entry.get_password() {
+    Ok(stored) => {
+      let raw = general_purpose::STANDARD
+        .decode(stored)
+        .map_err(|e| AppError::Crypto(format!("master key base64 decode failed: {e}")))?;
 
-    if raw.len() != KEY_LEN {
-      return Err(AppError::Crypto("invalid master key length".into()));
+      if raw.len() != KEY_LEN {
+        return Err(AppError::Crypto("invalid master key length".into()));
+      }
+
+      let mut key = [0u8; KEY_LEN];
+      key.copy_from_slice(&raw);
+
+      let _ = MASTER_KEY_CACHE.set(key);
+      Ok(key)
     }
 
-    let mut key = [0u8; KEY_LEN];
-    key.copy_from_slice(&raw);
-    return Ok(key);
+    // ✅ 只有 “确实不存在条目” 才生成新主密钥
+    Err(keyring::Error::NoEntry) => {
+      let mut key = [0u8; KEY_LEN];
+      rand::thread_rng().fill_bytes(&mut key);
+
+      let encoded = general_purpose::STANDARD.encode(key);
+      entry
+        .set_password(&encoded)
+        .map_err(|e| AppError::Keyring(format!("keyring set_password failed: {e}")))?;
+
+      let _ = MASTER_KEY_CACHE.set(key);
+      Ok(key)
+    }
+
+    // ❌ 其它错误都不要生成新 key，否则会导致你现在这种“每次 key 不同”
+    Err(e) => Err(AppError::Keyring(format!("keyring get_password failed: {e}"))),
   }
-
-  // 不存在 => 生成并保存
-  let mut key = [0u8; KEY_LEN];
-  rand::thread_rng().fill_bytes(&mut key);
-
-  let encoded = general_purpose::STANDARD.encode(key);
-  entry
-    .set_password(&encoded)
-    .map_err(|e| AppError::Keyring(format!("keyring set_password failed: {e}")))?;
-
-  Ok(key)
 }
 
-// 输出 base64(nonce || ciphertext)
 pub fn encrypt_json(plaintext: &str) -> Result<String, AppError> {
   let master_key = load_or_create_master_key()?;
   let key = Key::<Aes256Gcm>::from_slice(&master_key);
@@ -54,7 +67,7 @@ pub fn encrypt_json(plaintext: &str) -> Result<String, AppError> {
 
   let ciphertext = cipher
     .encrypt(nonce, plaintext.as_bytes())
-    .map_err(|e| AppError::Crypto(format!("encrypt failed: {e}")))?;
+    .map_err(|_| AppError::Crypto("encrypt failed: aead::Error".into()))?;
 
   let mut out = Vec::with_capacity(NONCE_LEN + ciphertext.len());
   out.extend_from_slice(&nonce_bytes);
@@ -81,7 +94,7 @@ pub fn decrypt_json(payload_b64: &str) -> Result<String, AppError> {
 
   let plaintext = cipher
     .decrypt(nonce, ciphertext)
-    .map_err(|e| AppError::Crypto(format!("decrypt failed: {e}")))?;
+    .map_err(|_| AppError::Crypto("decrypt failed: aead::Error".into()))?;
 
   String::from_utf8(plaintext).map_err(|e| AppError::Crypto(format!("utf8 decode failed: {e}")))
 }
