@@ -16,8 +16,6 @@
 
 </div>
 
----
-
 ## ✨ Features
 
 ### 🤖 AI Chat
@@ -64,8 +62,6 @@
 - Unified management for conversations, messages, settings, and tool history
 - API keys stored locally only
 
----
-
 ## 📦 Tech Stack
 
 | Layer      | Tech                    |
@@ -77,8 +73,6 @@
 | State      | Pinia                   |
 | Storage    | SQLite                  |
 | Language   | TypeScript              |
-
----
 
 ## 🚀 Getting Started
 
@@ -106,8 +100,6 @@ pnpm tauri dev
 pnpm tauri build
 ```
 
----
-
 ## ⚙️ Configuration
 
 ### AI Providers
@@ -124,15 +116,11 @@ pnpm tauri build
 
 > All configurations are stored locally in SQLite and take effect immediately.
 
----
-
 ## 🔐 Security
 
 - API keys are stored locally only
 - No chat or tool data is uploaded
 - Local database can be cleared at any time
-
----
 
 ## 🧩 Extensibility
 
@@ -141,8 +129,6 @@ ADui Tools is designed with a modular architecture:
 - Independent UI
 - Independent business logic
 - Automatic access to unified storage & network layers
-
----
 
 ## 🗺 Roadmap
 
@@ -154,8 +140,6 @@ ADui Tools is designed with a modular architecture:
 - HTTP debug tool
 - Plugin-based tool ecosystem
 
----
-
 ## 🤝 Contributing
 
 Contributions are welcome!
@@ -165,13 +149,9 @@ Contributions are welcome!
 - Commit your changes
 - Open a Pull Request
 
----
-
 ## 📄 License
 
 MIT License
-
----
 
 ## 🙌 Acknowledgements
 
