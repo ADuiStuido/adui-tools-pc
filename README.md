@@ -64,15 +64,15 @@
 
 ## 📦 技术栈
 
-| 层级 | 技术 |
-| -- | |
-| 前端 | Vue 3（Composition API） |
-| 构建 | Vite |
-| 桌面 | Tauri |
-| UI | Naive UI |
-| 状态管理 | Pinia |
-| 存储 | SQLite |
-| 语言 | TypeScript |
+| Layer / 层级      | Tech / 技术             |
+| ----------------- | ----------------------- |
+| Frontend / 前端   | Vue 3 (Composition API) |
+| Build Tool / 构建 | Vite                    |
+| Desktop / 桌面    | Tauri                   |
+| UI / 组件库       | Naive UI                |
+| State / 状态      | Pinia                   |
+| Storage / 存储    | SQLite                  |
+| Language / 语言   | TypeScript              |
 
 ## 🚀 快速开始
 
