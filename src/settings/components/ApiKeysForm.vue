@@ -2,6 +2,10 @@
 import type { ApiKeysForm } from '@/settings/settings.types.ts'
 import SvgIcon from '@/ui/SvgIcon.vue'
 import AdBlock from '@/ui/Ad-Block.vue'
+import { invoke } from '@tauri-apps/api/core'
+import { useMessage } from 'naive-ui'
+
+const message = useMessage()
 
 const apiKeysForm = reactive<ApiKeysForm>({
   translation: {
@@ -28,7 +32,27 @@ const apiKeysForm = reactive<ApiKeysForm>({
   },
 })
 
-const handleSaveApiKeys = () => {}
+async function loadApiKeys() {
+  try {
+    const data = await invoke<ApiKeysForm | null>('settings_get_api_keys')
+    console.log(data)
+    if (data) Object.assign(apiKeysForm, data)
+  } catch (e) {
+    // 读取失败不一定要打扰用户
+    console.warn(e)
+  }
+}
+
+const handleSaveApiKeys = async () => {
+  try {
+    await invoke('settings_save_api_keys', { payload: apiKeysForm })
+    message.success('保存成功')
+  } catch (e: unknown) {
+    message.error(e?.message ?? '保存失败')
+  }
+}
+
+onMounted(loadApiKeys)
 </script>
 
 <template>

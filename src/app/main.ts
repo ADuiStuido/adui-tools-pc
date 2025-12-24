@@ -6,12 +6,15 @@ import 'virtual:svg-icons-register'
 
 import App from './App.vue'
 import { setupRoute } from '@/app/router'
+import { initDiscreteApi } from '@/ui/ui-discrete.ts'
 
 const app = createApp(App)
 
 app.use(createPinia())
 
 async function setupApp() {
+  initDiscreteApi({ theme: 'light' })
+
   await setupRoute(app)
 
   app.mount('#app')
