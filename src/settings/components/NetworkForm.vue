@@ -37,12 +37,12 @@ const networkProxyForm = reactive<NetworkProxyForm>({
   mode: 'disable',
 })
 
-const saveApiKeys = async () => {
+const saveNetwork = async () => {
+  console.log(networkProxyForm)
   try {
     await invoke('settings_save_network', { payload: networkProxyForm })
-    message.success('保存成功')
   } catch (e: unknown) {
-    message.error(e?.message ?? '保存失败')
+    message.error(e?.message ?? '设置失败')
   }
 }
 
@@ -55,8 +55,6 @@ async function loadNetwork() {
     console.warn(e)
   }
 }
-
-watch(() => networkProxyForm, saveApiKeys, { deep: true })
 
 onMounted(loadNetwork)
 </script>
@@ -72,7 +70,7 @@ onMounted(loadNetwork)
     >
       <div class="flex flex-col gap-20px">
         <n-form-item label="代理模式" path="mode">
-          <n-radio-group v-model:value="networkProxyForm.mode">
+          <n-radio-group v-model:value="networkProxyForm.mode" @update:value="saveNetwork">
             <n-radio-button
               v-for="item in proxyOptions"
               :key="item.value"
@@ -83,7 +81,7 @@ onMounted(loadNetwork)
         </n-form-item>
         <div class="flex flex-col gap-20px" v-if="networkProxyForm.mode === 'manual'">
           <n-form-item label="代理配置" path="protocol">
-            <n-radio-group v-model:value="networkProxyForm.protocol">
+            <n-radio-group v-model:value="networkProxyForm.protocol" @update:value="saveNetwork">
               <n-radio
                 v-for="item in protocolOptions"
                 :key="item.value"
@@ -93,17 +91,34 @@ onMounted(loadNetwork)
             </n-radio-group>
           </n-form-item>
           <n-form-item label="代理地址" path="host">
-            <n-input v-model:value="networkProxyForm.host" placeholder="输入地址" clearable />
+            <n-input
+              v-model:value="networkProxyForm.host"
+              placeholder="输入地址"
+              clearable
+              @blur="saveNetwork"
+            />
           </n-form-item>
           <n-form-item label="代理端口" path="port">
             <n-input
-              v-model.number:value="networkProxyForm.port"
+              :value="networkProxyForm.port?.toString() ?? ''"
               placeholder="输入端口"
               clearable
+              @update:value="
+                (v) => {
+                  if (!v) networkProxyForm.port = undefined
+                  else networkProxyForm.port = Number(v)
+                }
+              "
+              @blur="saveNetwork"
             />
           </n-form-item>
           <n-form-item label="用户名" path="username">
-            <n-input v-model:value="networkProxyForm.username" placeholder="输入用户名" clearable />
+            <n-input
+              v-model:value="networkProxyForm.username"
+              placeholder="输入用户名"
+              clearable
+              @blur="saveNetwork"
+            />
           </n-form-item>
           <n-form-item label="密码" path="password">
             <n-input
@@ -112,6 +127,7 @@ onMounted(loadNetwork)
               type="password"
               show-password-on="click"
               clearable
+              @blur="saveNetwork"
             />
           </n-form-item>
         </div>

@@ -36,9 +36,3 @@ r2d2 = "0.8"
 reqwest = { version = "0.12", features = ["json", "gzip", "brotli", "deflate", "rustls-tls"] }
 
 thiserror = "2"
-base64 = "0.22"
-rand = "0.8"
-aes-gcm = "0.10"
-
-# 主密钥存系统钥匙串
-keyring = "3.6.3"

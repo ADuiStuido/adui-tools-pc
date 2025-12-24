@@ -9,10 +9,6 @@ pub enum AppError {
   Io(String),
   #[error("{0}")]
   Serde(String),
-  #[error("{0}")]
-  Crypto(String),
-  #[error("{0}")]
-  Keyring(String),
 }
 
 #[derive(Debug, Serialize)]
