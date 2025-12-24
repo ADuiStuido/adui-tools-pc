@@ -35,7 +35,6 @@ const apiKeysForm = reactive<ApiKeysForm>({
 async function loadApiKeys() {
   try {
     const data = await invoke<ApiKeysForm | null>('settings_get_api_keys')
-    console.log(data)
     if (data) Object.assign(apiKeysForm, data)
   } catch (e) {
     // 读取失败不一定要打扰用户

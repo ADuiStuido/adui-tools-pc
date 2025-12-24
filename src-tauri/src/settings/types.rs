@@ -43,3 +43,30 @@ pub struct ApiKeyOnly {
   #[serde(rename = "apiKey")]
   pub api_key: String,
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum ProxyMode {
+  Disable,
+  System,
+  Manual,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum ProxyProtocol {
+  Http,
+  Https,
+  Socks5,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct NetworkProxyForm {
+  pub mode: ProxyMode,
+  pub protocol: Option<ProxyProtocol>,
+  pub host: Option<String>,
+  pub port: Option<u16>,
+  pub username: Option<String>,
+  pub password: Option<String>,
+  pub no_proxy: Option<Vec<String>>,
+}

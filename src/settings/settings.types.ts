@@ -34,3 +34,35 @@ export type ApiKeysForm = {
     }
   }
 }
+
+export const ProxyMode = {
+  disable: 'disable',
+  system: 'system',
+  manual: 'manual',
+} as const
+
+export type ProxyMode = (typeof ProxyMode)[keyof typeof ProxyMode]
+
+export const ProxyProtocol = {
+  http: 'http',
+  https: 'https',
+  socks5: 'socks5',
+} as const
+
+export type ProxyProtocol = (typeof ProxyProtocol)[keyof typeof ProxyProtocol]
+
+export type NetworkProxyForm = {
+  mode: ProxyMode
+
+  /** 手动代理配置（mode === manual 才使用） */
+  protocol?: ProxyProtocol
+  host?: string
+  port?: number
+
+  /** 认证 */
+  username?: string
+  password?: string
+
+  /** 域名绕过 */
+  noProxy?: string[]
+}

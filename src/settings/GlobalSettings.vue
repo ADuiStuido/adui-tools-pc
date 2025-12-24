@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ApiKeysForm from '@/settings/components/ApiKeysForm.vue'
+import NetworkForm from '@/settings/components/NetworkForm.vue'
 
 const settingTypes = [
   {
@@ -87,6 +88,7 @@ const settingsContainer = (): HTMLElement => {
               <div class="title text-20px">{{ item.label }}</div>
             </n-divider>
             <api-keys-form v-if="item.key === 'credentials'" />
+            <network-form v-else-if="item.key === 'network'" />
             <div v-else class="h-500px"></div>
           </div>
         </div>
