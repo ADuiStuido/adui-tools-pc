@@ -4,6 +4,9 @@ import '@/app/styles/normalize.css'
 import 'virtual:uno.css'
 import 'virtual:svg-icons-register'
 
+import 'vfonts/Lato.css'
+import 'vfonts/FiraCode.css'
+
 import App from './App.vue'
 import { setupRoute } from '@/app/router'
 import { initDiscreteApi } from '@/ui/ui-discrete.ts'
