@@ -6,6 +6,12 @@ import type { ApiKeysForm } from '@/settings/settings.types.ts'
 import { invokeCmd } from '@/utils/tauri.ts'
 import { debounce } from 'lodash-es'
 import { useClipboardItems } from '@vueuse/core'
+import type { UploadCustomRequestOptions } from 'naive-ui'
+import type {
+  BaiduDocCreateRaw,
+  BaiduDocQueryRaw,
+  BaiduPicTranslateRaw,
+} from '@/tools/translate/translate.types.ts'
 
 const types = [
   { label: '文本翻译', value: 'text' },
@@ -19,7 +25,7 @@ const fileTypes = ['img', 'pdf', 'word', 'ppt', 'text']
 
 const text = ref<string>('')
 
-const translationResult = ref<string>('123123')
+const translationResult = ref<string>('')
 
 const debouncedTranslate = debounce(async (val: string) => {
   try {
@@ -94,6 +100,176 @@ const handleCopy = async () => {
   message.success('已复制')
 }
 
+/** File -> number[]（对应 Rust Vec<u8>） */
+async function fileToBytes(file: File): Promise<number[]> {
+  const buf = await file.arrayBuffer()
+  return Array.from(new Uint8Array(buf))
+}
+
+/** ===== 图片翻译 ===== */
+type PicTranslateResult = {
+  raw: BaiduPicTranslateRaw
+}
+
+const imageTranslating = ref(false)
+
+async function handleImageRequest(options: UploadCustomRequestOptions) {
+  const { file, onFinish, onError } = options
+  const f = file.file
+  if (!f) {
+    onError?.()
+    return
+  }
+
+  if (f.size > 10 * 1024 * 1024) {
+    message.error('文件大小不能超过 10MB')
+    onError?.()
+    return
+  }
+
+  const mime = f.type.toLowerCase()
+  const allowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/bmp', 'image/tiff', 'image/tif']
+  if (mime && !allowed.includes(mime)) {
+    message.error('不支持的图片格式')
+    onError?.()
+    return
+  }
+
+  imageTranslating.value = true
+
+  try {
+    const bytes = await fileToBytes(f)
+
+    const res = await invokeCmd<PicTranslateResult>('baidu_pic_translate', {
+      payload: {
+        image: bytes,
+        mime: mime || 'image/png',
+        from: 'auto',
+        to: 'en',
+        paste: 0,
+      },
+    })
+
+    // ✅ 类型安全地提取文本
+    const lines =
+      res.raw.data?.content
+        ?.map((item) => item.dst)
+        .filter((x): x is string => typeof x === 'string') ?? []
+
+    translationResult.value = lines.join('\n')
+
+    message.success('图片翻译完成')
+    onFinish?.()
+  } catch (e) {
+    message.error((e as Error).message)
+    onError?.()
+  } finally {
+    imageTranslating.value = false
+  }
+}
+
+/** ===== 文档翻译 ===== */
+type DocCreateResult = {
+  raw: BaiduDocCreateRaw
+}
+type DocQueryResult = {
+  raw: BaiduDocQueryRaw
+}
+const docTranslating = ref(false)
+
+/** 简单轮询工具（2s 一次，最多 60 次 = 2 分钟） */
+async function pollDocResult(id: string): Promise<BaiduDocQueryRaw> {
+  for (let i = 0; i < 60; i++) {
+    const res = await invokeCmd<DocQueryResult>('baidu_doc_translate_query', {
+      payload: { id },
+    })
+
+    const status = res.raw.result?.status
+
+    if (status === 'Succeeded') {
+      return res.raw
+    }
+
+    if (status === 'Failed') {
+      throw new Error(res.raw.error_msg || '文档翻译失败')
+    }
+
+    await new Promise((r) => setTimeout(r, 2000))
+  }
+
+  throw new Error('文档翻译超时')
+}
+
+async function handleDocRequest(options: UploadCustomRequestOptions) {
+  const { file, onFinish, onError } = options
+  const f = file.file
+  if (!f) {
+    onError?.()
+    return
+  }
+
+  if (f.size > 10 * 1024 * 1024) {
+    message.error('文件大小不能超过 10MB')
+    onError?.()
+    return
+  }
+
+  // 允许格式（按你 UI 文案）
+  const ext = f.name.split('.').pop()?.toLowerCase() || ''
+  const allowed = ['doc', 'docx', 'pdf', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'wps']
+  if (!allowed.includes(ext)) {
+    message.error('不支持的文档格式')
+    onError?.()
+    return
+  }
+
+  docTranslating.value = true
+  try {
+    const bytes = await fileToBytes(f)
+
+    // 1) create
+    const created = await invokeCmd<DocCreateResult>('baidu_doc_translate_create', {
+      payload: {
+        from: 'auto',
+        to: 'en',
+        file: bytes,
+        format: ext,
+        filename: f.name,
+        trans_image: 1,
+        output_format: 'docx',
+      },
+    })
+
+    const id = created.raw.result?.id
+    if (!id) {
+      throw new Error(created.raw.error_msg || '创建文档翻译任务失败')
+    }
+
+    message.info('已创建任务，正在翻译…')
+
+    // 2) poll
+    const finalRaw = await pollDocResult(id)
+
+    // 3) 从返回里取结果
+    // 百度通常会返回下载链接 / 文件信息（字段你需要根据 finalRaw 实际结构取）
+    // 先把整个 raw 打印出来，你对照一下再决定抽取哪个字段
+    console.log('文档最终结果 raw:', finalRaw)
+
+    // 你可以先简单把 json stringify 塞到右侧结果区做调试
+    translationResult.value = JSON.stringify(finalRaw, null, 2)
+
+    message.success('文档翻译完成')
+    onFinish?.()
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : typeof e === 'string' ? e : '文档翻译失败'
+
+    message.error(msg)
+    onError?.()
+  } finally {
+    docTranslating.value = false
+  }
+}
+
 onMounted(() => {
   loadApiKeys()
 })
@@ -142,10 +318,10 @@ onMounted(() => {
           <n-upload
             style="height: 100%"
             trigger-style="height: 100%"
-            multiple
-            directory-dnd
-            action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
             :max="1"
+            :show-file-list="false"
+            :custom-request="handleImageRequest"
+            :disabled="imageTranslating"
           >
             <n-upload-dragger class="h-full">
               <div class="h-full flex flex-col justify-center items-center gap-10px">
@@ -153,18 +329,19 @@ onMounted(() => {
                   <svg-icon name="file-img" />
                 </n-icon>
                 <n-text class="text-16px" depth="3"> 截图粘贴/拖拽/点击上传图片 </n-text>
+
                 <div class="flex items-center gap-10px">
                   <n-text class="text-14px" depth="3"> 文件大小不超过10MB </n-text>
                   <n-divider vertical />
                   <n-button text @click.stop="handleTips('image')">
                     <template #icon>
-                      <n-icon size="20">
-                        <HelpCircleOutline />
-                      </n-icon>
+                      <n-icon size="20"><HelpCircleOutline /></n-icon>
                     </template>
                     格式说明
                   </n-button>
                 </div>
+
+                <n-spin v-if="imageTranslating" size="small" />
               </div>
             </n-upload-dragger>
           </n-upload>
@@ -173,14 +350,15 @@ onMounted(() => {
           <n-upload
             style="height: 100%"
             trigger-style="height: 100%"
-            multiple
-            directory-dnd
-            action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
             :max="1"
+            :show-file-list="false"
+            :custom-request="handleDocRequest"
+            :disabled="docTranslating"
           >
             <n-upload-dragger class="h-full">
               <div class="h-full flex flex-col justify-center items-center gap-10px">
                 <n-text class="text-16px" depth="3"> 点击或拖拽上传 </n-text>
+
                 <div class="flex justify-center items-center gap-10px">
                   <n-icon
                     size="40"
@@ -196,13 +374,13 @@ onMounted(() => {
                   <n-divider vertical />
                   <n-button text @click.stop="handleTips('document')">
                     <template #icon>
-                      <n-icon size="20">
-                        <HelpCircleOutline />
-                      </n-icon>
+                      <n-icon size="20"><HelpCircleOutline /></n-icon>
                     </template>
                     格式说明
                   </n-button>
                 </div>
+
+                <n-spin v-if="docTranslating" size="small" />
               </div>
             </n-upload-dragger>
           </n-upload>
