@@ -115,6 +115,7 @@ onMounted(() => {
             v-model="text"
             show-limit
             :max="5000"
+            autofocus
             show-clear
             show-copy
             show-paste
