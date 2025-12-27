@@ -7,6 +7,7 @@ mod error;
 mod settings;
 
 use db::init_db;
+use crate::commands::baidu_translate::BaiduTokenState;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -43,6 +44,7 @@ pub fn run() {
 
       let pool = init_db(app.handle())?;
       app.manage(pool);
+      app.manage(BaiduTokenState::default());
 
       if cfg!(debug_assertions) {
         app.handle().plugin(

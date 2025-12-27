@@ -11,6 +11,7 @@ const apiKeysForm = reactive<ApiKeysForm>({
   translation: {
     baidu: {
       appId: '',
+      apiKey: '',
       appSecret: '',
     },
     youdao: {
@@ -76,6 +77,15 @@ onMounted(loadApiKeys)
           <n-input
             v-model:value="apiKeysForm.translation.baidu.appId"
             placeholder="输入百度 AppId"
+            clearable
+          />
+        </n-form-item>
+        <n-form-item label="百度 AppKey" path="translation.baidu.apiKey">
+          <n-input
+            v-model:value="apiKeysForm.translation.baidu.apiKey"
+            placeholder="输入百度 AppKey"
+            type="password"
+            show-password-on="click"
             clearable
           />
         </n-form-item>

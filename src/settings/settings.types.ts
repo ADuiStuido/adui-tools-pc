@@ -2,6 +2,7 @@ export type ApiKeysForm = {
   translation: {
     baidu: {
       appId: string
+      apiKey: string
       appSecret: string
     }
     youdao: {

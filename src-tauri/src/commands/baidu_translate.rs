@@ -37,7 +37,7 @@ const TOKEN_REFRESH_SAFETY_WINDOW: Duration = Duration::from_secs(60 * 60 * 24);
 
 #[derive(Debug)]
 pub struct BaiduTokenState {
-  pub inner: Mutex<Option<CachedToken>>,
+  inner: Mutex<Option<CachedToken>>,
 }
 
 #[derive(Debug, Clone)]
@@ -326,8 +326,9 @@ async fn get_access_token(
 
   // 2) 缓存失效 -> 拉新 token
   let keys = get_api_keys_required(pool)?;
-  let client_id = keys.translation.baidu.app_id;
-  let client_secret = keys.translation.baidu.app_secret;
+
+  let client_id = keys.translation.baidu.api_key.clone();
+  let client_secret = keys.translation.baidu.app_secret.clone();
 
   if client_id.is_empty() || client_secret.is_empty() {
     return Err(AppError::msg("Baidu API Key/Secret 为空，请先在设置里填写"));
@@ -404,7 +405,7 @@ fn unix_now() -> u64 {
 
 fn get_api_keys_required(pool: &DbPool) -> Result<ApiKeysForm, AppError> {
   let keys_opt = crate::settings::get_api_keys(pool)?;
-  Ok(keys_opt.unwrap_or_default())
+  keys_opt.ok_or_else(|| AppError::msg("未配置 API Keys，请先在设置中保存"))
 }
 
 fn get_network_opt(pool: &DbPool) -> Result<Option<NetworkProxyForm>, AppError> {

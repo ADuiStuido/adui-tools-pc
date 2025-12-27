@@ -2,6 +2,9 @@
 import SvgIcon from '@/ui/SvgIcon.vue'
 import AdTextarea from '@/ui/AdTextarea.vue'
 import { HelpCircleOutline, Close } from '@vicons/ionicons5'
+import type { ApiKeysForm } from '@/settings/settings.types.ts'
+import { invokeCmd } from '@/utils/tauri.ts'
+import { debounce } from 'lodash-es'
 
 const types = [
   { label: '文本翻译', value: 'text' },
@@ -15,6 +18,41 @@ const fileTypes = ['img', 'pdf', 'word', 'ppt', 'text']
 
 const text = ref<string>('')
 
+const translationResult = ref<string>('')
+
+const debouncedTranslate = debounce(async (val: string) => {
+  try {
+    const result = await invokeCmd<{
+      from: string
+      to: string
+      dst: string
+      raw: unknown
+    }>('baidu_text_translate', {
+      payload: {
+        q: val,
+        from: 'auto',
+        to: 'en',
+        term_ids: null,
+      },
+    })
+
+    translationResult.value = result.dst
+
+    console.log('翻译结果:', result.dst)
+  } catch (e) {
+    console.warn(e)
+  }
+}, 500)
+
+watch(
+  () => text.value,
+  (val) => {
+    const v = val?.trim()
+    if (!v) return
+    debouncedTranslate(v)
+  },
+)
+
 const modalShow = ref<boolean>(false)
 
 const modalType = ref<string>('')
@@ -22,6 +60,23 @@ const handleTips = (type: string) => {
   modalType.value = type
   modalShow.value = true
 }
+
+const message = useMessage()
+
+async function loadApiKeys() {
+  try {
+    const data = await invokeCmd<ApiKeysForm>('settings_get_api_keys')
+    if (data?.translation.baidu && Object.values(data?.translation.baidu).some((x) => !x))
+      message.warning('百度翻译尚未配置')
+  } catch (e) {
+    // 读取失败不一定要打扰用户
+    console.warn(e)
+  }
+}
+
+onMounted(() => {
+  loadApiKeys()
+})
 </script>
 
 <template>
@@ -162,7 +217,9 @@ const handleTips = (type: string) => {
       </div>
     </template>
 
-    <template #2> Pane 2 </template>
+    <template #2>
+      <div class="pl-20px text-20px">{{ translationResult }}</div>
+    </template>
   </n-split>
 </template>
 
