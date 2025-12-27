@@ -18,21 +18,68 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2.5.3", features = [] }
 
 [dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
+# ---------- 日志 ----------
+# Rust 标准日志门面
 log = "0.4"
+
+# Tauri 核心库（2.x）
 tauri = { version = "2.9.5", features = [] }
+
+# Tauri 官方日志插件（支持文件/控制台输出）
 tauri-plugin-log = "2"
 
+
+# ---------- 通用工具 ----------
+# UUID（用于会话、数据库主键等）
 uuid = { version = "1", features = ["v4"] }
+
+# 时间处理库（支持 serde 序列化，常用于 DB / API）
 chrono = { version = "0.4", features = ["serde"] }
 
-# SQLite
+
+# ---------- SQLite 数据库 ----------
+# SQLite 驱动（bundled = 内置 sqlite3，避免系统依赖问题）
 rusqlite = { version = "=0.37.0", features = ["bundled"] }
+
+# SQLite 连接池（r2d2 适配）
 r2d2_sqlite = "=0.31.0"
 r2d2 = "0.8"
 
-# HTTP（统一由 Rust 发起请求）
-reqwest = { version = "0.12", features = ["json", "gzip", "brotli", "deflate", "rustls-tls"] }
 
+# ---------- 错误处理 ----------
+# thiserror：声明式错误定义（#[derive(Error)]）
 thiserror = "2"
+
+
+# ---------- HTTP / 文件上传 ----------
+# multipart（主要用于图片 / 文档翻译上传）
+multipart = "0.18.0"
+
+# HTTP 客户端：
+# - json：JSON 序列化支持
+# - multipart：文件上传（百度图片翻译）
+# - rustls-tls：纯 Rust TLS（避免 openssl 依赖）
+reqwest = { version = "0.12", features = ["json", "multipart", "rustls-tls"] }
+
+
+# ---------- 序列化 ----------
+# serde：Rust <-> JSON / Struct 转换
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+
+# ---------- 异步运行时 ----------
+# tokio：
+# - sync：Mutex / channel
+# - macros：#[tokio::main]
+# - rt-multi-thread：多线程运行时（Tauri 后端推荐）
+tokio = { version = "1", features = ["sync", "macros", "rt-multi-thread"] }
+
+
+# ---------- 编码 / 工具 ----------
+# base64（用于文档翻译：文件内容 base64）
+base64 = "0.22"
+
+# URL 编码（OAuth / Query 参数）
+urlencoding = "2"
+

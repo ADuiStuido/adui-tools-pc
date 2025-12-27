@@ -55,10 +55,16 @@ pub fn run() {
       Ok(())
     })
     .invoke_handler(tauri::generate_handler![
+      // 设置相关
       commands::settings::settings_get_api_keys,
       commands::settings::settings_save_api_keys,
       commands::settings::settings_get_network,
       commands::settings::settings_save_network,
+      // 翻译相关
+      commands::baidu_translate::baidu_text_translate,
+      commands::baidu_translate::baidu_pic_translate,
+      commands::baidu_translate::baidu_doc_translate_create,
+      commands::baidu_translate::baidu_doc_translate_query,
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
