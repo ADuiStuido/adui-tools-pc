@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import SvgIcon from '@/ui/SvgIcon.vue'
 import AdTextarea from '@/ui/AdTextarea.vue'
-import { HelpCircleOutline, Close } from '@vicons/ionicons5'
+import { HelpCircleOutline, Close, CopyOutline } from '@vicons/ionicons5'
 import type { ApiKeysForm } from '@/settings/settings.types.ts'
 import { invokeCmd } from '@/utils/tauri.ts'
 import { debounce } from 'lodash-es'
+import { useClipboardItems } from '@vueuse/core'
 
 const types = [
   { label: '文本翻译', value: 'text' },
@@ -18,7 +19,7 @@ const fileTypes = ['img', 'pdf', 'word', 'ppt', 'text']
 
 const text = ref<string>('')
 
-const translationResult = ref<string>('')
+const translationResult = ref<string>('123123')
 
 const debouncedTranslate = debounce(async (val: string) => {
   try {
@@ -74,6 +75,25 @@ async function loadApiKeys() {
   }
 }
 
+const { copy, isSupported } = useClipboardItems()
+
+const handleCopy = async () => {
+  if (!isSupported.value) {
+    message.error('当前环境不支持复制')
+    return
+  }
+
+  await copy([
+    new ClipboardItem({
+      'text/plain': new Blob([translationResult.value], {
+        type: 'text/plain',
+      }),
+    }),
+  ])
+
+  message.success('已复制')
+}
+
 onMounted(() => {
   loadApiKeys()
 })
@@ -90,7 +110,15 @@ onMounted(() => {
         </n-tabs>
 
         <div v-if="translateType === 'text'" class="w-full pr-20px flex-1 flex flex-col gap-20px">
-          <ad-textarea class="text-20px" v-model="text" show-limit :max="5000" />
+          <ad-textarea
+            class="text-20px"
+            v-model="text"
+            show-limit
+            :max="5000"
+            show-clear
+            show-copy
+            show-paste
+          />
           <n-upload
             multiple
             directory-dnd
@@ -218,7 +246,18 @@ onMounted(() => {
     </template>
 
     <template #2>
-      <div class="pl-20px text-20px">{{ translationResult }}</div>
+      <div class="pl-20px text-20px w-full h-full relative">
+        <div class="w-full h-full overflow-y-auto">
+          <div class="translation-text">{{ translationResult }}</div>
+        </div>
+        <div class="absolute top-0 right-20px" v-if="translationResult">
+          <n-button text @click="handleCopy">
+            <n-icon>
+              <CopyOutline />
+            </n-icon>
+          </n-button>
+        </div>
+      </div>
     </template>
   </n-split>
 </template>
@@ -261,5 +300,11 @@ onMounted(() => {
   padding: 6px 0;
   color: #444;
   line-height: 1.6;
+}
+
+.translation-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
 }
 </style>
