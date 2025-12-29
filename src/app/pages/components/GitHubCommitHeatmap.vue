@@ -124,6 +124,7 @@ const formatDate = (timestampMs: number): string => dayjs(timestampMs).format('Y
           :data="[...heatmapData]"
           :start-date="startDate"
           :end-date="endDate"
+          tooltip
         >
           <template #tooltip="{ timestamp, value }">
             <div class="text-12px leading-18px">
