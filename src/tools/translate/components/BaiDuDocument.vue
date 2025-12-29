@@ -3,6 +3,7 @@ import { HelpCircleOutline, Close } from '@vicons/ionicons5'
 import type {
   BaiduDocCreateRaw,
   BaiduDocQueryRaw,
+  TranslateLangPair,
 } from '@/tools/translate/types/translate.types.ts'
 import { invokeCmd } from '@/utils/tauri.ts'
 import type { UploadCustomRequestOptions } from 'naive-ui'
@@ -11,6 +12,8 @@ import SvgIcon from '@/ui/SvgIcon.vue'
 const message = useMessage()
 
 const fileTypes = ['img', 'pdf', 'word', 'ppt', 'text']
+
+const props = defineProps<TranslateLangPair>()
 
 const modalShow = ref<boolean>(false)
 
@@ -82,8 +85,8 @@ async function handleDocRequest(options: UploadCustomRequestOptions) {
     // 1) create
     const created = await invokeCmd<DocCreateResult>('baidu_doc_translate_create', {
       payload: {
-        from: 'auto',
-        to: 'en',
+        from: props.from,
+        to: props.to,
         file: bytes,
         format: ext,
         filename: f.name,

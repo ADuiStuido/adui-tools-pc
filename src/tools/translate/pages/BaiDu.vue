@@ -82,8 +82,16 @@ onMounted(() => {
       :from="translateLangPair.from"
       :to="translateLangPair.to"
     />
-    <bai-du-image v-if="translateType === 'image'" />
-    <bai-du-document v-if="translateType === 'document'" />
+    <bai-du-image
+      v-if="translateType === 'image'"
+      :from="translateLangPair.from"
+      :to="translateLangPair.to"
+    />
+    <bai-du-document
+      v-if="translateType === 'document'"
+      :from="translateLangPair.from"
+      :to="translateLangPair.to"
+    />
   </div>
 </template>
 
