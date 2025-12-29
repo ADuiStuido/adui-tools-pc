@@ -5,8 +5,11 @@ import { invokeCmd } from '@/utils/tauri.ts'
 import { debounce } from 'lodash-es'
 import { CopyOutline } from '@vicons/ionicons5'
 import { useClipboardItems } from '@vueuse/core'
+import type { TranslateLangPair } from '@/tools/translate/types/translate.types.ts'
 
 const message = useMessage()
+
+const props = defineProps<TranslateLangPair>()
 
 const fileTypes = ['img', 'pdf', 'word', 'ppt', 'text']
 
@@ -24,8 +27,8 @@ const debouncedTranslate = debounce(async (val: string) => {
     }>('baidu_text_translate', {
       payload: {
         q: val,
-        from: 'auto',
-        to: 'en',
+        from: props.from,
+        to: props.to,
         term_ids: null,
       },
     })

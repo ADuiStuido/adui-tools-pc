@@ -1,3 +1,10 @@
+import type { BaiduMtLangCode } from '@/tools/translate/types/language.types.ts'
+
+export interface TranslateLangPair {
+  from: BaiduMtLangCode
+  to: BaiduMtLangCode
+}
+
 /**
  * =========================
  * 百度图片翻译返回（最小可用结构）

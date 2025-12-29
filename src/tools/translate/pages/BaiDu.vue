@@ -6,6 +6,7 @@ import BaiDuText from '@/tools/translate/components/BaiDuText.vue'
 import BaiDuImage from '@/tools/translate/components/BaiDuImage.vue'
 import BaiDuDocument from '@/tools/translate/components/BaiDuDocument.vue'
 import { BAIDU_MT_LANG_SELECT_GROUP_OPTIONS } from '@/tools/translate/types/language.types.ts'
+import type { TranslateLangPair } from '@/tools/translate/types/translate.types.ts'
 
 const types = [
   { label: '文本翻译', value: 'text' },
@@ -28,16 +29,16 @@ async function loadApiKeys() {
   }
 }
 
-const translateConfig = reactive({
+const translateLangPair = reactive<TranslateLangPair>({
   from: 'auto',
   to: 'en',
 })
 
 const handleSwap = () => {
-  const temp = translateConfig.from
+  const temp = translateLangPair.from
   if (temp === 'auto') return
-  translateConfig.from = translateConfig.to
-  translateConfig.to = temp
+  translateLangPair.from = translateLangPair.to
+  translateLangPair.to = temp
 }
 
 onMounted(() => {
@@ -54,7 +55,7 @@ onMounted(() => {
       <template #suffix>
         <div class="flex items-center gap-5px">
           <n-select
-            v-model:value="translateConfig.from"
+            v-model:value="translateLangPair.from"
             filterable
             :options="BAIDU_MT_LANG_SELECT_GROUP_OPTIONS"
             :bordered="false"
@@ -67,7 +68,7 @@ onMounted(() => {
             </n-icon>
           </n-button>
           <n-select
-            v-model:value="translateConfig.to"
+            v-model:value="translateLangPair.to"
             :options="BAIDU_MT_LANG_SELECT_GROUP_OPTIONS"
             :bordered="false"
             class="w-150px"
@@ -76,7 +77,11 @@ onMounted(() => {
         </div>
       </template>
     </n-tabs>
-    <bai-du-text v-if="translateType === 'text'" />
+    <bai-du-text
+      v-if="translateType === 'text'"
+      :from="translateLangPair.from"
+      :to="translateLangPair.to"
+    />
     <bai-du-image v-if="translateType === 'image'" />
     <bai-du-document v-if="translateType === 'document'" />
   </div>
