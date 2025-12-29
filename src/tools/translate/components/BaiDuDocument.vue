@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { HelpCircleOutline, Close } from '@vicons/ionicons5'
-import type { BaiduDocCreateRaw, BaiduDocQueryRaw } from '@/tools/translate/translate.types.ts'
+import type {
+  BaiduDocCreateRaw,
+  BaiduDocQueryRaw,
+} from '@/tools/translate/types/translate.types.ts'
 import { invokeCmd } from '@/utils/tauri.ts'
 import type { UploadCustomRequestOptions } from 'naive-ui'
 import SvgIcon from '@/ui/SvgIcon.vue'

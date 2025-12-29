@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { SwapHorizontalOutline } from '@vicons/ionicons5'
 import type { ApiKeysForm } from '@/settings/settings.types.ts'
 import { invokeCmd } from '@/utils/tauri.ts'
 import BaiDuText from '@/tools/translate/components/BaiDuText.vue'
 import BaiDuImage from '@/tools/translate/components/BaiDuImage.vue'
 import BaiDuDocument from '@/tools/translate/components/BaiDuDocument.vue'
+import { BAIDU_MT_LANG_SELECT_GROUP_OPTIONS } from '@/tools/translate/types/language.types.ts'
 
 const types = [
   { label: '文本翻译', value: 'text' },
@@ -26,6 +28,18 @@ async function loadApiKeys() {
   }
 }
 
+const translateConfig = reactive({
+  from: 'auto',
+  to: 'en',
+})
+
+const handleSwap = () => {
+  const temp = translateConfig.from
+  if (temp === 'auto') return
+  translateConfig.from = translateConfig.to
+  translateConfig.to = temp
+}
+
 onMounted(() => {
   loadApiKeys()
 })
@@ -37,6 +51,30 @@ onMounted(() => {
       <n-tab v-for="item in types" :key="item.value" :name="item.value">
         {{ item.label }}
       </n-tab>
+      <template #suffix>
+        <div class="flex items-center gap-5px">
+          <n-select
+            v-model:value="translateConfig.from"
+            filterable
+            :options="BAIDU_MT_LANG_SELECT_GROUP_OPTIONS"
+            :bordered="false"
+            class="w-150px"
+            size="small"
+          />
+          <n-button text size="small" @click="handleSwap">
+            <n-icon>
+              <SwapHorizontalOutline />
+            </n-icon>
+          </n-button>
+          <n-select
+            v-model:value="translateConfig.to"
+            :options="BAIDU_MT_LANG_SELECT_GROUP_OPTIONS"
+            :bordered="false"
+            class="w-150px"
+            size="small"
+          />
+        </div>
+      </template>
     </n-tabs>
     <bai-du-text v-if="translateType === 'text'" />
     <bai-du-image v-if="translateType === 'image'" />
