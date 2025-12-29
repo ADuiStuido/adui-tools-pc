@@ -12,6 +12,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    NAlert: typeof import('naive-ui')['NAlert']
     NAnchor: typeof import('naive-ui')['NAnchor']
     NAnchorLink: typeof import('naive-ui')['NAnchorLink']
     NAvatar: typeof import('naive-ui')['NAvatar']
@@ -24,6 +25,7 @@ declare module 'vue' {
     NDivider: typeof import('naive-ui')['NDivider']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
+    NHeatmap: typeof import('naive-ui')['NHeatmap']
     NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
     NInputGroup: typeof import('naive-ui')['NInputGroup']
@@ -50,6 +52,7 @@ declare module 'vue' {
     NSplit: typeof import('naive-ui')['NSplit']
     NTab: typeof import('naive-ui')['NTab']
     NTabs: typeof import('naive-ui')['NTabs']
+    NTag: typeof import('naive-ui')['NTag']
     NText: typeof import('naive-ui')['NText']
     NTooltip: typeof import('naive-ui')['NTooltip']
     NUpload: typeof import('naive-ui')['NUpload']
@@ -62,6 +65,7 @@ declare module 'vue' {
 
 // For TSX support
 declare global {
+  const NAlert: (typeof import('naive-ui'))['NAlert']
   const NAnchor: (typeof import('naive-ui'))['NAnchor']
   const NAnchorLink: (typeof import('naive-ui'))['NAnchorLink']
   const NAvatar: (typeof import('naive-ui'))['NAvatar']
@@ -74,6 +78,7 @@ declare global {
   const NDivider: (typeof import('naive-ui'))['NDivider']
   const NForm: (typeof import('naive-ui'))['NForm']
   const NFormItem: (typeof import('naive-ui'))['NFormItem']
+  const NHeatmap: (typeof import('naive-ui'))['NHeatmap']
   const NIcon: (typeof import('naive-ui'))['NIcon']
   const NInput: (typeof import('naive-ui'))['NInput']
   const NInputGroup: (typeof import('naive-ui'))['NInputGroup']
@@ -100,6 +105,7 @@ declare global {
   const NSplit: (typeof import('naive-ui'))['NSplit']
   const NTab: (typeof import('naive-ui'))['NTab']
   const NTabs: (typeof import('naive-ui'))['NTabs']
+  const NTag: (typeof import('naive-ui'))['NTag']
   const NText: (typeof import('naive-ui'))['NText']
   const NTooltip: (typeof import('naive-ui'))['NTooltip']
   const NUpload: (typeof import('naive-ui'))['NUpload']
