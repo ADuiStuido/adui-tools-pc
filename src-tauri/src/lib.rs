@@ -70,10 +70,18 @@ pub fn run() {
         .item(&app_menu)
         .build()?;
 
-      if let Some(main) = app.get_webview_window(MAIN_WINDOW_LABEL) {
-        let _old = main.set_menu(menu)?;
-      } else {
+      #[cfg(target_os = "macos")]
+      {
         app.set_menu(menu)?;
+      }
+
+      #[cfg(not(target_os = "macos"))]
+      {
+        if let Some(main) = app.get_webview_window(MAIN_WINDOW_LABEL) {
+          main.set_menu(menu)?;
+        } else {
+          app.set_menu(menu)?;
+        }
       }
 
 
