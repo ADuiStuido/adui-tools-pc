@@ -8,9 +8,10 @@
   </p>
 
 [![license](https://img.shields.io/github/license/ADuiStuido/adui-tools-pc.svg)](LICENSE)
-[![Vue](https://img.shields.io/badge/Vue-3.5.18-brightgreen.svg)](https://vuejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.0-blue.svg)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-7.0.6-646CFF.svg)](https://vitejs.dev/)
+[![Vue](https://img.shields.io/badge/Vue-3.5.25-brightgreen.svg)](https://vuejs.org/)
+[![Tauri](https://img.shields.io/badge/Tauri-2.9.6-24c8db.svg)](https://tauri.app/)
+[![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF.svg)](https://vitejs.dev/)
+[![NaiveUI](https://img.shields.io/badge/NaiveUI-2.43.2-00a13b.svg)](https://www.naiveui.com/)
 
   <p align="center"><a href="README.md">简体中文</a> | English</p>
 
