@@ -6,6 +6,8 @@ import 'virtual:svg-icons-register'
 
 import 'vfonts/Lato.css'
 import 'vfonts/FiraCode.css'
+import '@/assets/fonts/jetbrains-mono.css'
+import '@/app/styles/global.css'
 
 import App from './App.vue'
 import { setupRoute } from '@/app/router'
