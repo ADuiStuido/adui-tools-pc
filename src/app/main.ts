@@ -9,11 +9,14 @@ import 'vfonts/FiraCode.css'
 
 import App from './App.vue'
 import { setupRoute } from '@/app/router'
-import { initDiscreteApi } from '@/ui/ui-discrete.ts'
+import { initDiscreteApi } from '@/common/components/ui-discrete.ts'
+import { setupMonacoEnvironment } from '@/common/lib/monaco/monaco-environment.ts'
 
 const app = createApp(App)
 
 app.use(createPinia())
+
+setupMonacoEnvironment()
 
 async function setupApp() {
   initDiscreteApi({ theme: 'light' })

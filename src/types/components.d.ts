@@ -59,7 +59,7 @@ declare module 'vue' {
     NUploadDragger: typeof import('naive-ui')['NUploadDragger']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SvgIcon: typeof import('@/ui/SvgIcon.vue')['default']
+    SvgIcon: typeof import('@/common/components/SvgIcon.vue')['default']
   }
 }
 
@@ -112,5 +112,5 @@ declare global {
   const NUploadDragger: (typeof import('naive-ui'))['NUploadDragger']
   const RouterLink: (typeof import('vue-router'))['RouterLink']
   const RouterView: (typeof import('vue-router'))['RouterView']
-  const SvgIcon: (typeof import('@/ui/SvgIcon.vue'))['default']
+  const SvgIcon: (typeof import('@/common/components/SvgIcon.vue'))['default']
 }

@@ -2,7 +2,7 @@
 import { computed, h, ref } from 'vue'
 import { NIcon, type MenuOption } from 'naive-ui'
 import { useRoute, useRouter } from 'vue-router'
-import SvgIcon from '@/ui/SvgIcon.vue'
+import SvgIcon from '@/common/components/SvgIcon.vue'
 
 const appTitle = import.meta.env.VITE_APP_TITLE
 const route = useRoute()

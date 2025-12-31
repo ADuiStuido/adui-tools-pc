@@ -7,7 +7,7 @@ import type {
 } from '@/tools/translate/types/translate.types.ts'
 import { invokeCmd } from '@/utils/tauri.ts'
 import type { UploadCustomRequestOptions } from 'naive-ui'
-import SvgIcon from '@/ui/SvgIcon.vue'
+import SvgIcon from '@/common/components/SvgIcon.vue'
 
 const message = useMessage()
 

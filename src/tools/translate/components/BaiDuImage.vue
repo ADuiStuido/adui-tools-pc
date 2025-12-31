@@ -7,7 +7,7 @@ import type {
   TranslateLangPair,
 } from '@/tools/translate/types/translate.types.ts'
 import { invokeCmd } from '@/utils/tauri'
-import SvgIcon from '@/ui/SvgIcon.vue'
+import SvgIcon from '@/common/components/SvgIcon.vue'
 import type { BaiduMtLangCode } from '@/tools/translate/types/language.types.ts'
 
 const message = useMessage()

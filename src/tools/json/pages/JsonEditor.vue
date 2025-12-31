@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CodeEditor from '@/common/components/CodeEditor.vue'
+
+const jsonValue = ref<string>('')
+</script>
 
 <template>
-  <div>JsonEditor</div>
+  <code-editor v-model="jsonValue" language="json" />
 </template>
 
 <style scoped></style>

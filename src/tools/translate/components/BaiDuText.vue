@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AdTextarea from '@/ui/AdTextarea.vue'
-import SvgIcon from '@/ui/SvgIcon.vue'
+import AdTextarea from '@/common/components/AdTextarea.vue'
+import SvgIcon from '@/common/components/SvgIcon.vue'
 import { invokeCmd } from '@/utils/tauri.ts'
 import { debounce } from 'lodash-es'
 import { CopyOutline } from '@vicons/ionicons5'

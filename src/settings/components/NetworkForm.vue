@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type NetworkProxyForm, ProxyMode, ProxyProtocol } from '@/settings/settings.types.ts'
 import { invoke } from '@tauri-apps/api/core'
-import { message } from '@/ui/ui-discrete.ts'
+import { message } from '@/common/components/ui-discrete.ts'
 
 const proxyOptions = ref([
   {

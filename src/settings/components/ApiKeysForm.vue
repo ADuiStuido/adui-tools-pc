@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ApiKeysForm } from '@/settings/settings.types.ts'
-import SvgIcon from '@/ui/SvgIcon.vue'
-import AdBlock from '@/ui/AdBlock.vue'
+import SvgIcon from '@/common/components/SvgIcon.vue'
+import AdBlock from '@/common/components/AdBlock.vue'
 import { invoke } from '@tauri-apps/api/core'
 import { useMessage } from 'naive-ui'
 

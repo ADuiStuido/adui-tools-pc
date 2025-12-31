@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { registerAllMenuListen } from '@/app/bootstrap/register.ts'
-import AppProviders from '@/ui/AppProviders.vue'
+import AppProviders from '@/common/components/AppProviders.vue'
 
 const router = useRouter()
 
