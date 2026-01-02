@@ -6,6 +6,7 @@ import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+// import SQLWorker from 'monaco-editor/esm/vs/language/sql.worker?worker'
 
 type MonacoEnvironment = {
   getWorker: (moduleId: string, label: string) => Worker
@@ -29,6 +30,7 @@ export function setupMonacoEnvironment(): void {
     if (label === 'css' || label === 'scss' || label === 'less') return CssWorker
     if (label === 'html' || label === 'handlebars' || label === 'razor') return HtmlWorker
     if (label === 'typescript' || label === 'javascript') return TsWorker
+    // if (label === 'sql' || label === 'SQL') return SQLWorker
     return EditorWorker
   }
 

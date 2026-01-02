@@ -5,7 +5,7 @@ const jsonValue = ref<string>('')
 </script>
 
 <template>
-  <code-editor v-model="jsonValue" language="html" />
+  <code-editor v-model="jsonValue" language="json" />
 </template>
 
 <style scoped></style>
