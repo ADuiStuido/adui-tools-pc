@@ -46,6 +46,17 @@ const routes = (): RouteRecordRaw[] => [
         },
         component: () => import('@/tools/json/pages/JsonToSql.vue'),
       },
+      {
+        path: 'json-to-dart',
+        name: 'tool.json-to-dart',
+        meta: {
+          toolId: 'json',
+          title: 'JSON转Dart',
+          icon: 'json-to-dart',
+          order: 3,
+        },
+        component: () => import('@/tools/json/pages/JsonToDart.vue'),
+      },
     ],
   },
 ]
