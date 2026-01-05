@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useMessage } from 'naive-ui'
-import AdTextarea from '@/common/components/AdTextarea.vue'
 import CodeEditor from '@/common/components/CodeEditor.vue'
 
 type JsonPrimitive = string | number | boolean | null
@@ -174,7 +173,7 @@ watch(
     <n-split direction="horizontal" class="flex-1 min-h-0" :max="0.75" :min="0.25">
       <template #1>
         <div class="pane">
-          <ad-textarea v-model="text" />
+          <n-input type="textarea" style="height: 100%" :resizable="false" v-model="text" />
         </div>
       </template>
 
