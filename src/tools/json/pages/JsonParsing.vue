@@ -173,7 +173,7 @@ watch(
     <n-split direction="horizontal" class="flex-1 min-h-0" :max="0.75" :min="0.25">
       <template #1>
         <div class="pane">
-          <n-input type="textarea" style="height: 100%" :resizable="false" v-model="text" />
+          <n-input type="textarea" style="height: 100%" :resizable="false" v-model:value="text" />
         </div>
       </template>
 
