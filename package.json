@@ -44,7 +44,7 @@
     "format": "prettier --write --experimental-cli src/",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
-    "tauri:build": "npm run build && tauri build",
+    "tauri:build": "tauri build",
     "prepare": "husky",
     "commit": "cz"
   },

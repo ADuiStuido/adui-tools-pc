@@ -43,7 +43,7 @@ const debouncedTranslate = debounce(async (val: string) => {
 
 watch(
   () => text.value,
-  (val) => {
+  (val: string) => {
     const v = val?.trim()
     if (!v) return
     debouncedTranslate(v)

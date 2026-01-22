@@ -2,12 +2,12 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "ADui Tools",
   "version": "0.0.1",
-  "identifier": "com.adui.adui_tools_pc",
+  "identifier": "com.adui.adui-tools-pc",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:18080",
     "beforeDevCommand": "pnpm dev",
-    "beforeBuildCommand": "pnpm build"
+    "beforeBuildCommand": "pnpm build-only"
   },
   "app": {
     "windows": [
